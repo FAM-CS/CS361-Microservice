@@ -1,0 +1,3 @@
+# Gradebook API Contract
+
+API_KEY = ...
