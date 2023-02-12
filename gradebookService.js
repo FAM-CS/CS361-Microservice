@@ -1,19 +1,32 @@
 //~To start this server, run "npm run start"
 //~Run "npm install" before to get all node mod dependencies
+//~To quit, hit ctrl+C
 
 /* Sources:
  * https://blog.logrocket.com/understanding-api-key-authentication-node-js/
  * https://blog.hubspot.com/website/what-is-rest-api
+ *
+ * https://www.geeksforgeeks.org/node-js-fs-readdir-method/
+ * https://www.geeksforgeeks.org/node-js-file-system/
+ * https://www.tutorialspoint.com/nodejs/nodejs_file_system.htm
+ *
+ * https://www.geeksforgeeks.org/express-js-res-sendfile-function/
+ * http://expressjs.com/en/api.html#express.json
+ *
  */
 
 /*********************************************************************
  ** Global variables
  *********************************************************************/
-// var path = require('path');
-var express = require("express")
-//
-var app = express()
-var port = process.env.PORT || 3000;
+ var path = require("path");
+ var fs = require("fs")
+ var express = require("express")
+ //
+ var app = express()
+ var port = process.env.PORT || 3000;
+ var foldername = process.env.GRADE_FOLDER || "gradebooks"
+ var gradebook_dir = "./" + foldername
+
 
 // Set express app server to listen to a port, default is 3000
 app.listen(port, function () {
@@ -33,8 +46,6 @@ app.listen(port, function () {
     console.log("url: ", req.url)
     console.log("path: ", req.path)
     console.log("query: ", req.query)
-    console.log("params: ", req.params)
-    console.log("body: ", req.body)
 
     next()		// Go to next middleware function
 })
@@ -42,34 +53,97 @@ app.listen(port, function () {
 
 /*********************************************************************
  ** Function: HTTP GET HANDLE
- ** Description: Handle get request for sendMsg page
+ ** Description: Handle get request for csv file
  ** Parameters: req, res, next
  *********************************************************************/
 app.get("/files",function (req, res, next) {
-    // !req.param@deprecated
-    // since 4.11 Use either req.params, req.body or req.query, as applicable.
-    //
-    // Return the value of param name when present or defaultValue.
-    //
-    // Checks route placeholders, ex: /user/:id
-    // Checks body params, ex: id=12, {"id":12}
-    // Checks query string params, ex: ?id=12
-    // To utilize request bodies, req.body should be an object. This can be done by using the connect.bodyParser() middleware.
-    console.log("req.query: ", req.query['api_key'])
-    res.status(200).send("A message from CS361")
+    // console.log("req.query: ", req.query['api_key'])
+    // console.log("list: ", files)
+    // console.log("type: ", typeof(files))
+
+    // Get list of csv files
+    fs.readdir(gradebook_dir, function (error, files) {
+        if (error) {
+            res.status(500).send("Could not locate files")
+            console.log("ERROR: dir could not be read")
+        }
+        else {
+            res.status(200).send(files.join())
+        }
+    })
 })
+
 
 /*********************************************************************
  ** Function: HTTP GET HANDLE
- ** Description: Handle get request for sendMsg page
+ ** Description: Handle get request for returning contents csv file
  ** Parameters: req, res, next
  *********************************************************************/
- app.get("/sendMsg/:misc",function (req, res, next) {
-    // console.log("req.params: ", req.params)             // for route placeholders: /user/:id
-    // console.log("req.query: ", req.query)               // for body params, ex: id=12, {"id":12}
-    res.status(200).send("A SECRET message from CS361")
+ app.get("/files/:file",function (req, res, next) {
+    var file = req.params.file
+    var csv_path = path.join(__dirname, "/", foldername, "/", file)
+    console.log("csv_path: ", csv_path)
+
+    res.status(200).sendFile(path.join(__dirname, "/", foldername, "/", file))
 })
 
+
+// POST ==================================================================================
+
+app.use(express.json())     // NEED to be able to parse body
+
+/*********************************************************************
+ ** Function: HTTP POST HANDLE
+ ** Description: Handle post request to create a new gradebook csv file
+ ** Parameters: req, res, next
+ *********************************************************************/
+app.post("/files/:file/new", function (req, res, next) {
+    var file = req.params.file
+    console.log("req.headers: ", req.headers)
+    console.log("re.body: ", req.body)
+
+    // Async
+    fs.writeFile(
+        gradebook_dir + "/" + file,
+        req.body.header + req.body.grades,
+        function (err) {
+            if (err) {
+                res.status(500).send("File could not be written")
+            } else {
+                res.status(200).send("File created successfully")
+            }
+        }
+    )
+})
+
+
+/*********************************************************************
+ ** Function: HTTP POST HANDLE
+ ** Description: Handle post request to add new grades to a csv file
+ ** Parameters: req, res, next
+ *********************************************************************/
+ app.post("/files/:file/add", function (req, res, next) {
+    var file = req.params.file
+    console.log("req.headers: ", req.headers)
+    console.log("re.body: ", req.body)
+
+    // Async
+    fs.appendFile(
+        gradebook_dir + "/" + file,
+        req.body.grades,
+        function (err) {
+            if (err) {
+                res.status(500).send("File could not be updated")
+            } else {
+                res.status(200).send("File updated successfully")
+            }
+        }
+    )
+})
+
+
+
+// 404 ERROR =============================================================================
 
 /*********************************************************************
  ** Function: HTTP GET HANDLE
@@ -77,5 +151,5 @@ app.get("/files",function (req, res, next) {
  ** Parameters: req, res, next
  *********************************************************************/
 app.get("*", function (req, res, next) {
-    res.status(404).send("404: Error :(")
+    res.status(404).send("404: Bad request :(")
 })
