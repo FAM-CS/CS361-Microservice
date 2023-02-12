@@ -9,16 +9,18 @@ data,gpa
 yyyy-mm-dd,float
 ```
 ### Setup
-Before you run the API, run "source .env" to fill:
+Before you run the API, run `source .env` to fill env variables:
 ```
 PORT = ...
 API_KEY = ...
+GRADE_FOLDER = ...
 ```
-Also do:
+- **NOTE**: api keys are not used, if added it's a "dummy" one
+
+Install needed python libraries:
 ```
 pip install -r requirements.txt
 ```
-**NOTE**: api keys are not used, if added it's a "dummy" one
 
 ### Run
 ```
@@ -33,14 +35,8 @@ To stop, hit `ctrl+C` or `cmd+C` (keyboard interrupt)
 - **GET** /files/:file
     - Returns contents of specified csv file as a string
 
-- **POST** /files/:file/new
-```
-json = {"header": "data,gpa\n", "grades": "yyyy-mm-dd,gpa\n"}
-```
+- **POST** /files/:file/new   json = {"header": "data,gpa\n", "grades": "yyyy-mm-dd,gpa\n"}
     - Create new csv file with specified grades
 
-- **POST** /files/:file/add
-```
-json = {"grades": "yyyy-mm-dd,gpa\n"}
-```
+- **POST** /files/:file/add   json = {"grades": "yyyy-mm-dd,gpa\n"}
     - Append new grades to an existing gradebook
