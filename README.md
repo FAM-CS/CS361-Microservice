@@ -54,11 +54,11 @@ To stop, hit `ctrl+C` or `cmd+C` (keyboard interrupt)
         - response = requests.post(baseURL + /files/{file}/new, json = data)
         - response is a status code and simple message (OK=200, ERR=500)
 
-- **POST** /files/:file/add   json = {"grades": "yyyy-mm-dd,gpa\n"}
+- **POST** /files/:file/add
     - Append new grades to an existing gradebook
     - Python:
         - data = {"grades": "yyyy-mm-dd,gpa\n"}
-        - response = requests.post(baseURL + /files/{file}/new, json = data)
+        - response = requests.post(baseURL + /files/{file}/add, json = data)
         - response is a status code and simple message (OK=200, ERR=500)
 
-[^1]: I believe it is compatible with most python 3 version or 3.6+
+[^1]: I believe it is compatible with most python3 versions
