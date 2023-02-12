@@ -45,7 +45,7 @@ app.listen(port, function () {
  ** Description: Handle get request for sendMsg page
  ** Parameters: req, res, next
  *********************************************************************/
-app.get("/sendMsg",function (req, res, next) {
+app.get("/files",function (req, res, next) {
     // !req.param@deprecated
     // since 4.11 Use either req.params, req.body or req.query, as applicable.
     //
