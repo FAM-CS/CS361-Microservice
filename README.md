@@ -1,9 +1,9 @@
-# CS361-Microservice
-Gradebook API for getting csv files (and potentially making)
+# CS361-Gradebook Microservice
+Gradebook API for getting and making csv files
 
 ## Gradebook API Contract
 Currently API will have to run locally for the server and have a gradebook folder with csv
-files. The csv file will contain a header "date,gpa" and the next lines will contain the date.
+files. The csv file will contain a header "date,gpa" and the next lines will contain the date and gpa data.
 ```
 data,gpa
 yyyy-mm-dd,float
@@ -15,7 +15,8 @@ PORT = ...
 API_KEY = ...
 GRADE_FOLDER = ...
 ```
-- **NOTE**: api keys are not used, if added it's a "dummy" one
+*NOTE: api keys are not used, if added it's a "dummy" one*
+
 
 Install needed python libraries:
 ```
