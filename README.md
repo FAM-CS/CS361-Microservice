@@ -32,35 +32,35 @@ npm run start
 To stop, hit `ctrl+C` or `cmd+C` (keyboard interrupt)
 
 ### Requests & Responses
-**NOTE**: Anything in {} is meant to be replaced with corresponding value
+**NOTE**: Anything in {} is meant to be replaced with the corresponding value, :name are parameters
 
 
 **baseURL** = "http://localhost:{PORT}"
 
 - **GET** /files
     - Returns string of csv gradebook files separated by a comma
-    - Python:
+    - Python example:
         - response = requests.get(baseURL + /files)
         - files = response.text
 
 - **GET** /files/:file
     - Returns contents of specified csv file as a string
-    - Python:
-        - response = requests.get(baseURL + /files/{file})
+    - Python example:
+        - response = requests.get(baseURL + "/files/{file}")
         - csv_string = response.text
 
 - **POST** /files/:file/new
     - Create new csv file with specified grades
-    - Python:
+    - Python example:
         - data = {"header": "data,gpa\n", "grades": "yyyy-mm-dd,gpa\n"}
-        - response = requests.post(baseURL + /files/{file}/new, json = data)
+        - response = requests.post(baseURL + "/files/{file}/new", json = data)
         - response is a status code and simple message (OK=200, ERR=500)
 
 - **POST** /files/:file/add
     - Append new grades to an existing gradebook
-    - Python:
+    - Python example:
         - data = {"grades": "yyyy-mm-dd,gpa\n"}
-        - response = requests.post(baseURL + /files/{file}/add, json = data)
+        - response = requests.post(baseURL + "/files/{file}/add", json = data)
         - response is a status code and simple message (OK=200, ERR=500)
 
 [^1]: I believe it is compatible with most python3 versions
