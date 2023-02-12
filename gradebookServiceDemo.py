@@ -8,6 +8,7 @@ import requests
 # - https://www.geeksforgeeks.org/get-post-requests-using-python/
 # - https://able.bio/rhett/how-to-set-and-get-environment-variables-in-python--274rgt5
 
+
 # Global Constants:
 PORT = os.getenv("PORT")
 KEY = os.environ.get("API_KEY")
@@ -71,6 +72,8 @@ def main():
     print(f"resp.text: {response.text}")
     files = response.text.split(",")
     print(f"Files: {files}\n\n")
+
+    return
 
 
 if __name__ == "__main__":

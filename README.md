@@ -3,10 +3,11 @@ Gradebook API for getting and making csv files. Also contains a demo on how to u
 with python (3.10)[^1] requests library.
 
 ## Gradebook API Contract
-Currently API will have to run locally for the server and have a gradebook folder with csv
-files. The csv file will contain a header "date,gpa" and the next lines will contain the date and gpa data.
+Currently API will have to run locally for the _server_ and have a _gradebook folder_ with csv files.
+The csv file will contain a header "date,gpa" and the next lines will contain the date and gpa data.
+There is no enforcement on the types/format of the date and gpa values.
 ```
-data,gpa
+date,gpa
 yyyy-mm-dd,float
 ```
 ### Setup
@@ -26,14 +27,15 @@ pip install -r requirements.txt
 
 ### Run
 ```
-node gradebookService.js
+npm run start
 ```
 To stop, hit `ctrl+C` or `cmd+C` (keyboard interrupt)
 
 ### Requests & Responses
 **NOTE**: Anything in {} is meant to be replaced with corresponding value
-**baseURL** = "http://localhost:{PORT}"
 
+
+**baseURL** = "http://localhost:{PORT}"
 
 - **GET** /files
     - Returns string of csv gradebook files separated by a comma

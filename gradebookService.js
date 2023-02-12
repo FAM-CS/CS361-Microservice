@@ -1,7 +1,9 @@
+#!/usr/bin/env node
 //~To start this server, run "npm run start"
 //~Run "npm install" before to get all node mod dependencies
+//~
+//~To run as developer (edits update live), run "npm run dev"
 //~To quit, hit ctrl+C
-
 /* Sources:
  * https://blog.logrocket.com/understanding-api-key-authentication-node-js/
  * https://blog.hubspot.com/website/what-is-rest-api
