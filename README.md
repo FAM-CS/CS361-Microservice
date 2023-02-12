@@ -61,4 +61,4 @@ To stop, hit `ctrl+C` or `cmd+C` (keyboard interrupt)
         - response = requests.post(baseURL + /files/{file}/new, json = data)
         - response is a status code and simple message (OK=200, ERR=500)
 
-[^1]: I believe it is compatible with most python 3 version or 3.6+
+[^1]: I believe it is compatible with most python3 versions
