@@ -1,5 +1,6 @@
 ## Ignore for ssssssssssssssssssssssss
 .env
+node_modules
 
 ## Ignore .vscode settings
 .vscode
