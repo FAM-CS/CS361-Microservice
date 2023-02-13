@@ -26,8 +26,8 @@
  //
  var app = express()
  var port = process.env.PORT || 3000;
- var foldername = process.env.GRADE_FOLDER || "gradebooks"
- var gradebook_dir = "./" + foldername
+ var foldername = process.env.GRADE_FOLDER || "gradebooks"      // path routing
+ var gradebook_dir = "./" + foldername                          // relative path
 
 
 // Set express app server to listen to a port, default is 3000
@@ -78,8 +78,9 @@ app.get("/files",function (req, res, next) {
 
 /*********************************************************************
  ** Function: HTTP GET HANDLE
- ** Description: Handle get request for returning contents csv file
+ ** Description: Get request for returning contents csv file, including header
  ** Parameters: req, res, next
+ **             :file = file to send contents of (csv)
  *********************************************************************/
  app.get("/files/:file",function (req, res, next) {
     var file = req.params.file
@@ -90,16 +91,22 @@ app.get("/files",function (req, res, next) {
 })
 
 
+// =======================================================================================
 // POST ==================================================================================
+// =======================================================================================
 
-app.use(express.json())     // NEED to be able to parse body
+
+app.use(express.json())     // NEED to be able to parse json body
+
 
 /*********************************************************************
  ** Function: HTTP POST HANDLE
  ** Description: Handle post request to create a new gradebook csv file
  ** Parameters: req, res, next
+ **             :file = file to write to (csv)
  *********************************************************************/
 app.post("/files/:file/new", function (req, res, next) {
+    // Get filename to write to
     var file = req.params.file
     console.log("req.headers: ", req.headers)
     console.log("re.body: ", req.body)
@@ -123,8 +130,10 @@ app.post("/files/:file/new", function (req, res, next) {
  ** Function: HTTP POST HANDLE
  ** Description: Handle post request to add new grades to a csv file
  ** Parameters: req, res, next
+ **             :file = file to append to (csv)
  *********************************************************************/
  app.post("/files/:file/add", function (req, res, next) {
+    // Get filename to append to
     var file = req.params.file
     console.log("req.headers: ", req.headers)
     console.log("re.body: ", req.body)
@@ -144,8 +153,10 @@ app.post("/files/:file/new", function (req, res, next) {
 })
 
 
-
+// =======================================================================================
 // 404 ERROR =============================================================================
+// =======================================================================================
+
 
 /*********************************************************************
  ** Function: HTTP GET HANDLE
