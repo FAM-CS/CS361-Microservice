@@ -65,6 +65,7 @@ To stop, hit `ctrl+C` or `cmd+C` (keyboard interrupt)
         - can access response via `response.status_code` or `response.text`
 
 ### UML Sequence Diagram
+Diagram made with Visual Paradigm Online
 ![UML Sequence Diagram of client-server gradebook api](/UML_Sequence.png)
 
 [^1]: I believe it is compatible with most python3 versions
