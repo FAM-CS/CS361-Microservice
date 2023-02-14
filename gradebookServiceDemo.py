@@ -14,7 +14,8 @@ PORT = os.getenv("PORT")
 KEY = os.environ.get("API_KEY")
 FOLDER = os.environ.get("GRADE_FOLDER")
 
-URL = f"http://localhost:{PORT}/files?api_key={KEY}"
+URL = f"http://localhost:{PORT}/files"
+# URL = f"http://localhost:{PORT}/files?api_key={KEY}"
 # URL = f"http://localhost:{PORT}/files/fl22_bob.csv"
 # URL = f"http://localhost:{PORT}/files/fl22_bob.csv?api_key={KEY}"
 # IF ENGR SERVER:
@@ -55,7 +56,7 @@ def main():
 
 
     pause = input("\nHit enter to unpause: ")
-    # ? HOWTO: Create a new gradebook csv file
+    # ? HOWTO: Add more grades gradebook csv file
     updated_file = {"grades": "2021-03-16,3.2\n2021-06-20,3.2\n2021-09-20,3.2\n2021-11-20,3.3\n"}
     post_url = f"http://localhost:{PORT}/files/sp20_test.csv/add"
     #
